@@ -584,7 +584,7 @@ namespace dotless.Core.Parser
 
             var memo = Remember(parser);
 
-            var match = parser.Tokenizer.Match(@"([#.](?:[\w-]|\\(?:[a-fA-F0-9]{1,6} ?|[^a-fA-F0-9]))+)\s*\(");
+            var match = parser.Tokenizer.Match(@"([#.](?:[\w-]|[^\x00-\x80]|\\(?:[a-fA-F0-9]{1,6} ?|[^a-fA-F0-9]))+)\s*\(");
             if (!match)
                 return null;
 
@@ -794,7 +794,7 @@ namespace dotless.Core.Parser
 
             PushComments();
             GatherComments(parser); // to collect, combinator must have picked up something which would require memory anyway
-            Node e = parser.Tokenizer.Match(@"[.#:]?[a-zA-Z0-9_-]+") || parser.Tokenizer.Match('*') || Attribute(parser) ||
+            Node e = parser.Tokenizer.Match(@"[.#:]?(?:[a-zA-Z0-9_-]|[^\x00-\x80])+") || parser.Tokenizer.Match('*') || Attribute(parser) ||
                     parser.Tokenizer.MatchAny(@"\([^)@]+\)");
 
             bool isCombinatorAnd = !e && c.Value.StartsWith("&");

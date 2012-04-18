@@ -430,5 +430,21 @@ image: url(http://); }";
 ";
             AssertLess(input, expected);
         }
+
+        [Test]
+        public void SupportUnicodeClassnames()
+        {
+            var input = @"
+.זרו {
+  background-color: red;
+}
+";
+            var expected = @"
+.זרו {
+  background-color: red;
+}
+";
+            AssertLess(input, expected);
+        }
     }
 }
